@@ -5,7 +5,7 @@
 </main>
 
 <footer class="glass-footer">
-  <span>GlassTheme v1.0.2</span>
+  <span>GlassTheme v1.0.3</span>
   <span class="footer-sep">|</span>
   <a href="https://github.com/openwrt/luci" target="_blank">{{ version.luciname }} ({{ version.luciversion }})</a>
   <span class="footer-sep">|</span>

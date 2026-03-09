@@ -10,11 +10,11 @@
   /* ---- Typography ---- */
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, "Noto Sans", sans-serif;
   --font-mono: "SF Mono", SFMono-Regular, ui-monospace, Menlo, Consolas, "Liberation Mono", monospace;
-  --font-size-base: 14px;
-  --font-size-sm: 12px;
-  --font-size-lg: 16px;
-  --font-size-xl: 20px;
-  --font-size-2xl: 28px;
+  --font-size-base: 0.875rem;
+  --font-size-sm: 0.8125rem;
+  --font-size-lg: 1rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.75rem;
   --line-height: 1.5;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
@@ -53,7 +53,7 @@
   --sidebar-collapsed-width: 64px;
   --sidebar-gap: 10px;
   --header-height: 56px;
-  --content-max-width: 1200px;
+  --content-max-width: none;
   --content-padding: 24px;
   /* ---- Radius ---- */
   --radius-sm: 6px;
@@ -269,9 +269,10 @@ h3 {
 .nav-item {
   display: flex;
   align-items: center;
-  padding: var(--space-sm) var(--space-xl);
+  padding: 0.55rem var(--space-xl);
   margin: 1px var(--space-sm);
   border-radius: var(--radius-md);
+  font-size: var(--font-size-lg);
   color: var(--color-text);
   cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast);
@@ -328,7 +329,7 @@ h3 {
 }
 .nav-sub .nav-item {
   padding-left: calc(var(--space-xl) + 32px);
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
   transform: translateX(-8px);
   opacity: 0;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease, color var(--transition-fast);
@@ -991,14 +992,13 @@ select:focus {
   transform: none;
 }
 .cbi-button-positive,
-.cbi-button-save,
 .cbi-button-apply,
 .cbi-button-action,
 .cbi-button-reload,
 .cbi-button[value="Submit"],
 .cbi-button[value="Upload"],
 .cbi-button[value$="Apply"] {
-  /* Primary glass — blue-tinted glass-bg */
+  /* Primary glass — blue-tinted (Save & Apply, actions) */
   background-image: linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(0, 122, 255, 0.07) 25%, rgba(10, 132, 255, 0.09) 50%, rgba(0, 122, 255, 0.06) 75%, rgba(0, 100, 220, 0.08) 100%);
   background-color: rgba(255, 255, 255, 0.45);
   color: var(--color-primary);
@@ -1006,7 +1006,6 @@ select:focus {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 6px rgba(255, 255, 255, 0.08);
 }
 .cbi-button-positive:hover,
-.cbi-button-save:hover,
 .cbi-button-apply:hover,
 .cbi-button-action:hover,
 .cbi-button-reload:hover,
@@ -1018,13 +1017,28 @@ select:focus {
   box-shadow: 0 4px 12px rgba(0, 122, 255, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.1);
 }
 .cbi-button-positive:active,
-.cbi-button-save:active,
 .cbi-button-apply:active,
 .cbi-button-action:active,
 .cbi-button-reload:active,
 .cbi-button[value="Submit"]:active,
 .cbi-button[value="Upload"]:active,
 .cbi-button[value$="Apply"]:active {
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+.cbi-button-save {
+  /* Secondary glass — green-tinted (Save) */
+  background-image: linear-gradient(135deg, rgba(52, 199, 89, 0.1) 0%, rgba(52, 199, 89, 0.07) 25%, rgba(48, 209, 88, 0.09) 50%, rgba(52, 199, 89, 0.06) 75%, rgba(40, 180, 75, 0.08) 100%);
+  background-color: rgba(255, 255, 255, 0.45);
+  color: #248a3d;
+  border: 0.5px solid rgba(52, 199, 89, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.35), inset 0 0 6px rgba(255, 255, 255, 0.08);
+}
+.cbi-button-save:hover {
+  opacity: 0.9;
+  color: #248a3d;
+  box-shadow: 0 4px 12px rgba(52, 199, 89, 0.12), 0 1px 3px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4), inset 0 0 8px rgba(255, 255, 255, 0.1);
+}
+.cbi-button-save:active {
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 .cbi-button-negative,
@@ -1379,6 +1393,7 @@ input[type="radio"] {
   height: 100%;
   background: rgba(0, 0, 0, 0.35);
   z-index: var(--z-modal);
+  /* Wide modals — CBI forms, sysupgrade, wireless edit */
 }
 #modal_overlay > .modal {
   background: var(--glass-bg-strong);
@@ -1388,9 +1403,25 @@ input[type="radio"] {
   box-shadow: var(--glass-shadow-lg);
   border-radius: var(--radius-xl);
   padding: var(--space-2xl);
-  max-width: 500px;
+  max-width: 600px;
+  min-width: 270px;
   width: calc(100% - var(--space-2xl) * 2);
+  max-height: calc(100vh - 4em);
+  overflow-y: auto;
   z-index: calc(var(--z-modal) + 1);
+}
+#modal_overlay > .modal > * {
+  max-width: 100%;
+}
+#modal_overlay > .modal > pre,
+#modal_overlay > .modal > textarea {
+  white-space: pre-wrap;
+  overflow: auto;
+  width: 100%;
+}
+#modal_overlay > .modal.cbi-modal,
+#modal_overlay > .modal.uci-dialog {
+  max-width: 900px;
 }
 /* LuCI adds modal-overlay-active to <body>, not to #modal_overlay */
 body.modal-overlay-active #modal_overlay {
@@ -1595,23 +1626,34 @@ body.modal-overlay-active #modal_overlay {
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   border: 0.5px solid var(--glass-border);
   box-shadow: var(--glass-shadow);
+  display: inline-flex;
+  flex-direction: column;
   border-radius: var(--radius-md);
-  padding: var(--space-lg);
+  padding: 0;
   margin-bottom: var(--space-md);
   line-height: 1.25;
-  overflow: hidden;
+  overflow: visible;
+  min-width: 100px;
 }
 .ifacebox-head {
   font-weight: var(--font-weight-semibold);
-  padding-bottom: var(--space-sm);
+  padding: var(--space-sm) var(--space-lg);
+  margin: 0;
   border-bottom: 0.5px solid var(--color-separator);
-  margin-bottom: var(--space-sm);
+  /* Zone-colored header — tinted glass instead of opaque */
+}
+.ifacebox-head[style*="background-color"] {
+  background-color: rgba(var(--zone-color-rgb), 0.5) !important;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-bottom: 0.5px solid rgba(var(--zone-color-rgb), 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 .ifacebox-head.active {
   background: linear-gradient(135deg, rgba(var(--color-primary-rgb), 0.75) 0%, rgba(var(--color-primary-rgb), 0.6) 50%, rgba(var(--color-primary-rgb), 0.7) 100%);
   color: var(--color-text-inverse);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  padding: var(--space-sm) var(--space-lg);
   border-bottom: none;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -1620,6 +1662,7 @@ body.modal-overlay-active #modal_overlay {
 .ifacebox-body {
   line-height: 1.5;
   font-size: var(--font-size-sm);
+  padding: var(--space-sm) var(--space-lg) var(--space-lg);
   /* L.itemlist output — key-value pairs */
   /* Device badge row */
 }
@@ -1789,7 +1832,7 @@ div[style*="display:grid;grid-template-columns:repeat"] > .ifacebox > .ifacebox-
   background: rgba(0, 0, 0, 0.04);
   border-radius: var(--radius-md);
   padding: var(--space-lg);
-  max-height: 500px;
+  max-height: calc(100vh - 350px);
   overflow-y: auto;
   white-space: pre-wrap;
   word-break: break-all;

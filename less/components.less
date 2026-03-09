@@ -233,14 +233,13 @@ select {
 }
 
 .cbi-button-positive,
-.cbi-button-save,
 .cbi-button-apply,
 .cbi-button-action,
 .cbi-button-reload,
 .cbi-button[value="Submit"],
 .cbi-button[value="Upload"],
 .cbi-button[value$="Apply"] {
-  /* Primary glass — blue-tinted glass-bg */
+  /* Primary glass — blue-tinted (Save & Apply, actions) */
   background-image: linear-gradient(
     135deg,
     rgba(0, 122, 255, 0.10) 0%,
@@ -263,6 +262,42 @@ select {
     color: var(--color-primary);
     box-shadow:
       0 4px 12px rgba(0, 122, 255, 0.12),
+      0 1px 3px rgba(0, 0, 0, 0.05),
+      inset 0 1px 0 rgba(255, 255, 255, 0.40),
+      inset 0 0 8px rgba(255, 255, 255, 0.10);
+  }
+
+  &:active {
+    box-shadow:
+      inset 0 2px 4px rgba(0, 0, 0, 0.15),
+      inset 0 1px 2px rgba(0, 0, 0, 0.10);
+  }
+}
+
+.cbi-button-save {
+  /* Secondary glass — green-tinted (Save) */
+  background-image: linear-gradient(
+    135deg,
+    rgba(52, 199, 89, 0.10) 0%,
+    rgba(52, 199, 89, 0.07) 25%,
+    rgba(48, 209, 88, 0.09) 50%,
+    rgba(52, 199, 89, 0.06) 75%,
+    rgba(40, 180, 75, 0.08) 100%
+  );
+  background-color: rgba(255, 255, 255, 0.45);
+  color: rgb(36, 138, 61);
+  border: 0.5px solid rgba(52, 199, 89, 0.20);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.06),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    inset 0 0 6px rgba(255, 255, 255, 0.08);
+
+  &:hover {
+    opacity: 0.90;
+    color: rgb(36, 138, 61);
+    box-shadow:
+      0 4px 12px rgba(52, 199, 89, 0.12),
       0 1px 3px rgba(0, 0, 0, 0.05),
       inset 0 1px 0 rgba(255, 255, 255, 0.40),
       inset 0 0 8px rgba(255, 255, 255, 0.10);
@@ -701,9 +736,28 @@ input[type="radio"] {
     .glass-frosted();
     border-radius: var(--radius-xl);
     padding: var(--space-2xl);
-    max-width: 500px;
+    max-width: 600px;
+    min-width: 270px;
     width: calc(100% - var(--space-2xl) * 2);
+    max-height: calc(100vh - 4em);
+    overflow-y: auto;
     z-index: calc(var(--z-modal) + 1);
+
+    > * {
+      max-width: 100%;
+    }
+
+    > pre, > textarea {
+      white-space: pre-wrap;
+      overflow: auto;
+      width: 100%;
+    }
+  }
+
+  /* Wide modals — CBI forms, sysupgrade, wireless edit */
+  > .modal.cbi-modal,
+  > .modal.uci-dialog {
+    max-width: 900px;
   }
 }
 

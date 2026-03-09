@@ -8,7 +8,7 @@ include $(TOPDIR)/rules.mk
 
 LUCI_TITLE:=Glass - Apple-inspired glassmorphism theme for LuCI
 LUCI_DEPENDS:=
-PKG_VERSION:=1.0.2
+PKG_VERSION:=1.0.3
 PKG_RELEASE:=1
 
 # Disable CSS minification (backdrop-filter can break with csstidy)

@@ -121,9 +121,10 @@
 .nav-item {
   display: flex;
   align-items: center;
-  padding: var(--space-sm) var(--space-xl);
+  padding: 0.55rem var(--space-xl);
   margin: 1px var(--space-sm);
   border-radius: var(--radius-md);
+  font-size: var(--font-size-lg);
   color: var(--color-text);
   cursor: pointer;
   transition: background var(--transition-fast), color var(--transition-fast);
@@ -193,7 +194,7 @@
 
   .nav-item {
     padding-left: calc(var(--space-xl) + 32px);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
     transform: translateX(-8px);
     opacity: 0;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
