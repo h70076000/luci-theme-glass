@@ -2,6 +2,8 @@
 
 A glassmorphism theme for OpenWrt LuCI, inspired by Apple's visionOS and macOS. Frosted-glass panels, backdrop blur, translucent buttons, and inset highlights across the entire UI.
 
+**[Live Demo](https://rchen14b.github.io/luci-theme-glass/)** | **[Download](https://github.com/rchen14b/luci-theme-glass/releases/latest)**
+
 ![License](https://img.shields.io/badge/license-GPL--3.0%20%2F%20Commercial-blue.svg)
 ![OpenWrt](https://img.shields.io/badge/OpenWrt-23.05%2B-brightgreen.svg)
 ![Version](https://img.shields.io/badge/version-1.0.3-orange.svg)
