@@ -12,6 +12,9 @@ LICENSE="GPL-3.0"
 DIST_DIR="dist"
 WORK_DIR=$(mktemp -d)
 
+# Use GNU tar (gtar) on macOS, fall back to tar
+TAR=$(command -v gtar 2>/dev/null || echo tar)
+
 trap "rm -rf $WORK_DIR" EXIT
 
 echo "==> Preparing file tree..."
@@ -74,9 +77,9 @@ chmod 755 "$IPK_DIR/control/postinst"
 
 echo "2.0" > "$IPK_DIR/debian-binary"
 
-(cd "$DATA_DIR" && tar --numeric-owner --owner=0 --group=0 -czf "$IPK_DIR/data.tar.gz" .)
-(cd "$IPK_DIR/control" && tar --numeric-owner --owner=0 --group=0 -czf "$IPK_DIR/control.tar.gz" .)
-(cd "$IPK_DIR" && ar r "$OLDPWD/$DIST_DIR/${PKG_NAME}_${PKG_VERSION}-${PKG_RELEASE}_all.ipk" debian-binary control.tar.gz data.tar.gz 2>/dev/null)
+(cd "$DATA_DIR" && $TAR --format=gnu --numeric-owner --owner=0 --group=0 -cf - . | gzip -n > "$IPK_DIR/data.tar.gz")
+(cd "$IPK_DIR/control" && $TAR --format=gnu --numeric-owner --owner=0 --group=0 -cf - . | gzip -n > "$IPK_DIR/control.tar.gz")
+(cd "$IPK_DIR" && $TAR --format=gnu --numeric-owner --owner=0 --group=0 -cf - ./debian-binary ./data.tar.gz ./control.tar.gz | gzip -n > "$OLDPWD/$DIST_DIR/${PKG_NAME}_${PKG_VERSION}-${PKG_RELEASE}_all.ipk")
 
 echo "    -> $DIST_DIR/${PKG_NAME}_${PKG_VERSION}-${PKG_RELEASE}_all.ipk"
 
@@ -103,7 +106,7 @@ EOF
 
 cp -r "$DATA_DIR"/* "$APK_DIR/"
 
-(cd "$APK_DIR" && tar --numeric-owner --owner=0 --group=0 -czf "$OLDPWD/$DIST_DIR/${PKG_NAME}-${PKG_VERSION}-r${PKG_RELEASE}.apk" .PKGINFO $(ls -d */ 2>/dev/null))
+(cd "$APK_DIR" && $TAR --format=gnu --numeric-owner --owner=0 --group=0 -czf "$OLDPWD/$DIST_DIR/${PKG_NAME}-${PKG_VERSION}-r${PKG_RELEASE}.apk" .PKGINFO $(ls -d */ 2>/dev/null))
 
 echo "    -> $DIST_DIR/${PKG_NAME}-${PKG_VERSION}-r${PKG_RELEASE}.apk"
 
