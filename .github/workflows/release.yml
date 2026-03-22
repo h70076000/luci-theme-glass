@@ -57,7 +57,11 @@ jobs:
           docker run --rm \
             -v "$PWD/dist/apk_staging:/repo" \
             alpine:latest sh -c "
-              cd /repo && apk index -o APKINDEX.tar.gz *.apk 2>&1 || true
+              apk add --no-cache apk-tools >/dev/null 2>&1
+              cd /repo
+              apk index --no-interactive -o APKINDEX.tar.gz *.apk 2>&1 || \
+              apk index -o APKINDEX.tar.gz *.apk 2>&1 || \
+              echo 'WARN: apk index failed, skipping APKINDEX'
             "
 
       - name: Deploy package repo to gh-pages
@@ -88,7 +92,7 @@ jobs:
           # apk feed
           mkdir -p apk/noarch
           cp "/tmp/dist-save/$APK" apk/noarch/
-          cp /tmp/dist-save/apk_staging/APKINDEX.tar.gz apk/noarch/
+          cp /tmp/dist-save/apk_staging/APKINDEX.tar.gz apk/noarch/ 2>/dev/null || true
           # Remove old versions
           find apk/noarch -name '*.apk' ! -name "$APK" -delete
 
