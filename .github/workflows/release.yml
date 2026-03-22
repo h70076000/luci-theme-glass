@@ -30,7 +30,9 @@ jobs:
           echo "ipk=luci-theme-glass_${VER}-1_all.ipk" >> "$GITHUB_OUTPUT"
           echo "apk=luci-theme-glass-${VER}-r1.apk" >> "$GITHUB_OUTPUT"
 
-      - name: Generate opkg Packages index
+      - name: Generate and sign opkg Packages index
+        env:
+          USIGN_SEC_KEY: ${{ secrets.USIGN_SEC_KEY }}
         run: |
           cd dist
           IPK="${{ steps.version.outputs.ipk }}"
@@ -48,6 +50,14 @@ jobs:
           echo "" >> Packages
 
           gzip -k Packages
+
+          # Sign with usign key (signify-openbsd is compatible)
+          sudo apt-get install -y -qq signify-openbsd >/dev/null 2>&1
+          echo "$USIGN_SEC_KEY" > _tmp/glass.sec
+          signify-openbsd -S -s _tmp/glass.sec -m Packages -x Packages.sig
+          echo "Packages signed successfully"
+          cat Packages.sig
+
           rm -rf _tmp
 
       - name: Generate apk packages.adb index
@@ -86,8 +96,7 @@ jobs:
           cp "/tmp/dist-save/$IPK" packages/
           cp /tmp/dist-save/Packages packages/
           cp /tmp/dist-save/Packages.gz packages/
-          # Remove any stale sig file — invalid sig causes opkg to reject the list
-          rm -f packages/Packages.sig
+          cp /tmp/dist-save/Packages.sig packages/
           # Remove old versions
           find packages -name '*.ipk' ! -name "$IPK" -delete
 
