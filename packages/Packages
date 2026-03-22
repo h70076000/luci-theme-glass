@@ -1,0 +1,14 @@
+Package: luci-theme-glass
+Version: 1.1.0-1
+Architecture: all
+Maintainer: Ryan Chen <rchen14b@gmail.com>
+Section: luci
+Priority: optional
+Installed-Size: 284
+Description: Glass - Apple-inspired glassmorphism theme for LuCI
+Homepage: https://github.com/rchen14b/luci-theme-glass
+License: GPL-3.0
+Filename: luci-theme-glass_1.1.0-1_all.ipk
+Size: 30233
+SHA256sum: 5c6658b1ee3b69ebd15458a27a2b8c8e8d9271517a4fd1ae56d5bccbb8cc7ad8
+
